@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "web-helm.fullname" . }}
+  labels:
+    {{- include "web-helm.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30101
+  selector:
+    {{- include "web-helm.selectorLabels" . | nindent 4 }}
